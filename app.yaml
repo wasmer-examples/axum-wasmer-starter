@@ -1,0 +1,4 @@
+---
+kind: wasmer.io/App.v0
+name: wasmer-axum-starter
+package: wasmer/wasix-axum-example@0.1.3
