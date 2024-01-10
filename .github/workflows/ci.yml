@@ -1,0 +1,44 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy_wasmer_axum_starter:
+    name: Build and Deploy Wasmer Axum Starter to Wasmer Edge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Rust
+        uses: dsherret/rust-toolchain-file@v1
+      - name: Install cargo-wasix
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-wasix
+      - name: Cargo Wasix Update Check
+        run: cargo wasix self update-check
+      - name: Setup Wasmer
+        uses: wasmerio/setup-wasmer@v2
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+      - name: Type Checking
+        run: cargo wasix check --verbose --locked --release
+        continue-on-error: false
+      - name: Build
+        run: cargo wasix build --verbose --locked --release
+        continue-on-error: false
+      - name: Deploy app to wasmer.wtf
+        run: wasmer deploy --registry="https://registry.wasmer.wtf/graphql" --token=${{ secrets.WASMER_CIUSER_DEV_TOKEN }} --publish-package --non-interactive --no-wait --no-persist-id --owner wasmer-tests
+        continue-on-error: true
+      - name: Deploy app to wasmer.io
+        run: wasmer deploy --registry="https://registry.wasmer.io/graphql" --token=${{ secrets.WASMER_CIUSER_PROD_TOKEN }} --publish-package --non-interactive --no-wait --no-persist-id --owner wasmer-tests
