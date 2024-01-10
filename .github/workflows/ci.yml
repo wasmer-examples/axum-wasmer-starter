@@ -19,8 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Rust
-        uses: dsherret/rust-toolchain-file@v1
       - name: Install cargo-wasix
         uses: taiki-e/install-action@v2
         with:
