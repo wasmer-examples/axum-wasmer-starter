@@ -1,40 +1,37 @@
-# AXUM WASIX STARTER
+This is an [Axum](https://github.com/tokio-rs/axum) Web Server starter template that compiles to [WASIX](https://wasix.org).
 
-This repo contains a starter project for building a **Wasix** based axum web server.
+> Checkout the full tutorial [here](http://wasix.org/docs/language-guide/rust/tutorials/wasix-axum)
 
-## Compiling the project
+
+## Getting started
+
+First, build the project using [`cargo-wasix`](https://crates.io/crates/cargo-wasix):
 
 ```bash
 $ cargo wasix build
 ```
 
-## Running the project
+Then, you can run the server easily using Wasmer:
 
 ```bash
-$ wasmer run target/wasm32-wasmer-wasi/release/wasix-axum.wasm --net --env PORT=8080
+$ wasmer run . --net --env PORT=8080
 Listening on http://127.0.0.1:8080
 ```
 
-> Note: The `PORT` environment variable is required to run the server locally. On edge this defaults to 80 because Wasmer edge expects the server to listen on port 80 and it will proxy the request to the server.
+> [!NOTE]
+> You will need to have Wasmer installed (check out [the docs to install the Wasmer CLI](https://docs.wasmer.io/install)!). 
+> The `--net` flag is required to enable networking support in Wasmer. The `PORT` environment variable is required to run the server locally.
 
-## Deploy to Wasmer Edge
+## Deploy on Wasmer Edge
 
-1. Login to `wasmer-cli`
+The easiest way to deploy your WCGI Rust app is to use the [Wasmer Edge](https://wasmer.io/products/edge).
 
-```bash
-$ wasmer login
-```
-
-2. Replace `wasix-org` username in `wasmer.toml` and `deploy.toml` with your username
-   > Note: `wasmer.toml` is for publishing the image to **wasmer registry** and `deploy.toml` is for deploying the image to **wasmer-edge**
-3. Deploy to `wasmer-edge`
+Live example: https://wasix-axum-example.wasmer.app
 
 ```bash
-$ wasmer deploy
+wasmer deploy
 ```
 
-Checkout the full tutorial [here](http://wasix.org/docs/language-guide/rust/tutorials/wasix-axum)
+> [!NOTE]
+> You will need to change the namespace in `wasmer.toml` to your own namespace and app name in `app.yaml` to your own app name.
 
-This project is available on wasmer edge:
-
-> Available on https://wasix-axum-example.wasmer.app
