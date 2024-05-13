@@ -18,9 +18,6 @@ $ wasmer run . --net --env PORT=8080
 Listening on http://127.0.0.1:8080
 ```
 
-> [!NOTE]
-> You will need to have Wasmer installed (check out [the docs to install the Wasmer CLI](https://docs.wasmer.io/install)!). 
-> The `--net` flag is required to enable networking support in Wasmer. The `PORT` environment variable is required to run the server locally.
 
 ## Deploy on Wasmer Edge
 
@@ -31,7 +28,3 @@ Live example: https://wasix-axum-example.wasmer.app
 ```bash
 wasmer deploy
 ```
-
-> [!NOTE]
-> You will need to change the namespace in `wasmer.toml` to your own namespace and app name in `app.yaml` to your own app name.
-

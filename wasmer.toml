@@ -1,11 +1,3 @@
-[package]
-name = "wasmer/wasix-axum-example"
-version = "0.1.3"
-description = "Package for wasmer axum starter"
-wasmer-extra-flags = "--net --enable-threads --enable-bulk-memory"
-
-[dependencies]
-
 [[module]]
 name = "wasix-axum"
 source = "target/wasm32-wasmer-wasi/release/wasix-axum.wasm"
