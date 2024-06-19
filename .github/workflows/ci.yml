@@ -36,4 +36,4 @@ jobs:
         run: cargo wasix build --verbose --locked --release
         continue-on-error: false
       - name: Deploy app to Wasmer Edge
-        run: wasmer deploy --token=${{ secrets.WASMER_CIUSER_PROD_TOKEN }} --publish-package --non-interactive --no-wait --no-persist-id --app-name=axum-wasmer-starter --owner=ciuser
+        run: wasmer deploy --registry="wasmer.wtf" --token=${{ secrets.WAPM_DEV_TOKEN }} --publish-package --non-interactive --no-wait --no-persist-id --app-name=axum-wasmer-starter --owner=ciuser
