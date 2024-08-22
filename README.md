@@ -21,7 +21,7 @@ Listening on http://127.0.0.1:8080
 
 ## Deploy on Wasmer Edge
 
-The easiest way to deploy your WCGI Rust app is to use the [Wasmer Edge](https://wasmer.io/products/edge).
+The easiest way to deploy your Axum Rust app is to use the [Wasmer Edge](https://wasmer.io/products/edge).
 
 Live example: https://wasix-axum-example.wasmer.app
 
