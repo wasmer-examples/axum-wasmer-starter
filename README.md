@@ -14,7 +14,7 @@ $ cargo wasix build
 Then, you can run the server easily using Wasmer:
 
 ```bash
-$ wasmer run . --net --env PORT=8080
+$ wasmer run . --env PORT=8080
 Listening on http://127.0.0.1:8080
 ```
 
