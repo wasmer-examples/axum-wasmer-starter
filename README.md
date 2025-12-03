@@ -1,30 +1,32 @@
-This is an [Axum](https://github.com/tokio-rs/axum) Web Server starter template that compiles to [WASIX](https://wasix.org).
+# Axum Web Server + Wasmer
 
-> Checkout the full tutorial [here](http://wasix.org/docs/language-guide/rust/tutorials/wasix-axum)
+This example shows how to run a minimal **Axum** HTTP server compiled to **WASIX** on **Wasmer Edge**.
 
+## Demo
 
-## Getting started
+`https://<your-subdomain>.wasmer.app/` (deploy to get a live endpoint)
 
-First, build the project using [`cargo-wasix`](https://crates.io/crates/cargo-wasix):
+## How it Works
 
-```bash
-$ cargo wasix build
-```
+`src/main.rs` creates a single-route Axum application:
 
-Then, you can run the server easily using Wasmer:
+* `Router::new().route("/", get(handler))` registers one handler that returns `"Hello, Axum ❤️ WASIX!"`.
+* The server reads the `PORT` environment variable (default `80`) so it matches Wasmer’s assigned port.
+* `axum::Server::bind(&addr).serve(...)` launches the async server on top of Tokio.
 
-```bash
-$ wasmer run . --env PORT=8080
-Listening on http://127.0.0.1:8080
-```
+Because the target is WASIX, the project builds to a `.wasm` binary that Has its own WASI-compatible networking stack.
 
-
-## Deploy on Wasmer Edge
-
-The easiest way to deploy your Axum Rust app is to use the [Wasmer Edge](https://wasmer.io/products/edge).
-
-Live example: https://wasix-axum-example.wasmer.app
+## Running Locally
 
 ```bash
-wasmer deploy
+cargo build --target wasm32-wasmer-wasi
+wasmer run target/wasm32-wasmer-wasi/debug/skip-rust-axum.wasm --env PORT=3000
 ```
+
+Open `http://127.0.0.1:3000/` to see the greeting. (You can also `cargo run` for a native build during development.)
+
+## Deploying to Wasmer (Overview)
+
+1. Build the WASIX binary: `cargo build --target wasm32-wasmer-wasi --release`.
+2. Reference the output module in `wasmer.toml` and expose the `_start` entrypoint.
+3. Deploy to Wasmer Edge and visit `https://<your-subdomain>.wasmer.app/`.
